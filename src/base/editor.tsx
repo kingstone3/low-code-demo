@@ -1,6 +1,8 @@
 import { Form } from 'antd';
 
-export abstract class Editor {
+export default abstract class Editor {
+  canEdit = true;
+
   propRender = () => {
     return (
       <Form>

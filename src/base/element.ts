@@ -1,36 +1,44 @@
-export default abstract class Element<Props> {
-  abstract type: string;
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import * as CSS from 'csstype';
 
+import Editor from './editor';
+
+export default abstract class Element {
   id: string;
+  parentId: string | undefined;
+  children: Element[] = [];
 
-  parent: Element<unknown> | undefined;
-  children: Element<unknown>[] = [];
+  abstract template: React.ReactElement;
 
-  abstract props: Props | undefined;
-  abstract styles: unknown | undefined;
-  abstract data: unknown | undefined;
+  props: Record<string, unknown> | undefined;
+  style: CSS.Properties<string | number> | undefined;
 
-  constructor() {
-    this.id = this.getInitialId();
+  editor?: Editor;
+  dataLoader?: () => Promise<unknown>;
+
+  constructor(
+    label: string,
+    init?: {
+      children?: Element[];
+      props?: Record<string, unknown>;
+      style?: CSS.Properties<string | number>;
+    },
+  ) {
+    this.id = `${label}_${uuidv4()}`;
+
+    this.children = init?.children || [];
+    this.props = init?.props;
+    this.style = init?.style;
   }
 
-  getInitialId() {
-    return `${this.type}-${Date.now()}`;
-  }
-
-  push(child: Element<unknown>[]) {
-    child.forEach((item) => {
-      item.parent = this;
-    });
-
-    this.children = [...this.children, ...child];
-  }
-
-  delete() {
-    if (this.parent) {
-      this.parent.children = this.parent.children.filter(
-        (item) => item.id !== this.id,
-      );
+  findById(id: string): Element | undefined {
+    if (this.id === id) {
+      return this;
     }
+
+    return this.children.find((child) => {
+      return child.findById(id);
+    });
   }
 }

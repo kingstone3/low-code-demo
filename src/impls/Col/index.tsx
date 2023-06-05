@@ -1,28 +1,25 @@
 import { ReactNode } from 'react';
-import { Row } from 'antd';
+import { Col } from 'antd';
 
 import Editor from '../../base/editor';
 import Element from '../../base/element';
 
-export default class RowComponent extends Element {
+export default class ColComponent extends Element {
   constructor() {
-    super('Row', {
+    super('Col', {
       style: {
+        minWidth: '100px',
         minHeight: '100px',
-
-        padding: '10px',
-
-        backgroundColor: '#ffffff',
       },
     });
   }
 
-  template = (<Row />);
+  template = (<Col />);
 
-  editor = new RowEditor();
+  editor = new ColEditor();
 }
 
-class RowEditor extends Editor {
+class ColEditor extends Editor {
   canEdit = false;
 
   renderItems(): ReactNode {
