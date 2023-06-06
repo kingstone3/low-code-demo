@@ -17,11 +17,16 @@ export default function Config({
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (!currentConfigElement) {
-      form.resetFields();
-    } else {
-      form.resetFields();
-      form.setFieldsValue(currentConfigElement.getConfigFields());
+    form.resetFields();
+
+    if (currentConfigElement) {
+      form.setFieldsValue({
+        id: currentConfigElement.id,
+        request: currentConfigElement.hasRequest
+          ? currentConfigElement.request
+          : undefined,
+        ...currentConfigElement.getConfigFields(),
+      });
     }
   }, [currentConfigElement, form]);
 
@@ -35,7 +40,13 @@ export default function Config({
         form={form}
         onFinish={(values) => {
           if (currentConfigElement) {
-            currentConfigElement.hanldeConfigFinish(values);
+            currentConfigElement.hanldeConfigFinish({
+              ...values,
+              id: currentConfigElement.id,
+              request: currentConfigElement.hasRequest
+                ? values.request
+                : undefined,
+            });
 
             flush();
           }
@@ -46,6 +57,12 @@ export default function Config({
         </Form.Item>
 
         {currentConfigElement?.renderConfigItems()}
+
+        {currentConfigElement?.hasRequest ? (
+          <Form.Item label="请求方法" name="request">
+            <Input.TextArea />
+          </Form.Item>
+        ) : null}
 
         <Form.Item>
           <Space>

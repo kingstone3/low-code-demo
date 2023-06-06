@@ -17,7 +17,6 @@ export default class Text extends Base {
 
   getConfigFields(): Record<string, any> {
     return {
-      id: this.id,
       content: this.content,
     };
   }

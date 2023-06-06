@@ -9,6 +9,8 @@ export default class Text extends Base {
   isNative = false;
   componentPath = ['Table'];
 
+  hasRequest = true;
+
   constructor(elementInit?: ElementInit) {
     super({
       label: 'Table',
@@ -21,9 +23,7 @@ export default class Text extends Base {
   }
 
   getConfigFields(): Record<string, any> {
-    return {
-      id: this.id,
-    };
+    return {};
   }
 
   renderConfigItems(): ReactNode {
@@ -32,5 +32,6 @@ export default class Text extends Base {
 
   hanldeConfigFinish(values: Record<string, any>): void {
     this.content = values.content;
+    this.request = values.request;
   }
 }

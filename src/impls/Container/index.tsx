@@ -32,7 +32,6 @@ export default class Container extends Base {
 
   getConfigFields() {
     return {
-      id: this.id,
       backgroundColor: this.style?.backgroundColor,
     };
   }
@@ -47,7 +46,7 @@ export default class Container extends Base {
     );
   }
 
-  hanldeConfigFinish(values: { backgroundColor: string | undefined }): void {
+  hanldeConfigFinish(values: Record<string, any>): void {
     this.style = this.style || {};
 
     this.style.backgroundColor = values.backgroundColor;
