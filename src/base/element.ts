@@ -56,4 +56,20 @@ export default abstract class Element {
 
     return result;
   }
+
+  getPreviewObject(): object {
+    const result = {};
+
+    const deepWalk = (tree: Element[]) => {
+      for (let i = 0; i < tree.length; i++) {
+        if ((tree[i]?.children?.length ?? 0) > 0) {
+          deepWalk(tree[i].children!);
+        }
+      }
+    };
+
+    deepWalk([this]);
+
+    return result;
+  }
 }

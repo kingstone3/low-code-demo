@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import { Modal } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -11,11 +12,14 @@ import Container from './impls/Container';
 import type Base from './base';
 
 import classes from './index.module.css';
+import PreviewNode from './components/PreviewNode';
 
 export default function App() {
   const schema = useRef<Base>(new Container());
 
   const [currentConfigElement, setCurrentConfigElement] = useState<Base>();
+
+  const [previewSchema, setPreviewSchema] = useState<Partial<Base>>();
 
   const [, _flush] = useState(Symbol('flush'));
 
@@ -24,29 +28,43 @@ export default function App() {
   }, []);
 
   const handlePreview = useCallback(() => {
-    console.log(schema.current);
+    setPreviewSchema(JSON.parse(JSON.stringify(schema.current)));
   }, []);
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className={classes.wrapper}>
-        <Factory />
+    <>
+      <DndProvider backend={HTML5Backend}>
+        <div className={classes.wrapper}>
+          <Factory />
 
-        <div style={{ flexGrow: 1, padding: 10 }}>
-          <EditorNode
-            element={schema.current}
+          <div style={{ flexGrow: 1, padding: 10 }}>
+            <EditorNode
+              element={schema.current}
+              currentConfigElement={currentConfigElement}
+              setCurrentConfigElement={setCurrentConfigElement}
+            />
+          </div>
+
+          <Config
             currentConfigElement={currentConfigElement}
-            setCurrentConfigElement={setCurrentConfigElement}
+            flush={flush}
+            onPreview={handlePreview}
           />
         </div>
+      </DndProvider>
 
-        <Config
-          currentConfigElement={currentConfigElement}
-          flush={flush}
-          onPreview={handlePreview}
-        />
-      </div>
-    </DndProvider>
+      <Modal
+        open={!!previewSchema}
+        width="100vw"
+        style={{ top: 0, height: '100vh' }}
+        footer={null}
+        onCancel={() => {
+          setPreviewSchema(undefined);
+        }}
+      >
+        <PreviewNode element={previewSchema!} />
+      </Modal>
+    </>
   );
 }
 

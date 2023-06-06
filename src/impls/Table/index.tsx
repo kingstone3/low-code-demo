@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Form, Input } from 'antd';
 
 import Base from '../../base';
 import { ElementInit } from '../../base/element';
@@ -28,13 +27,7 @@ export default class Text extends Base {
   }
 
   renderConfigItems(): ReactNode {
-    return (
-      <>
-        <Form.Item label="文字内容" name="content">
-          <Input.TextArea />
-        </Form.Item>
-      </>
-    );
+    return <></>;
   }
 
   hanldeConfigFinish(values: Record<string, any>): void {

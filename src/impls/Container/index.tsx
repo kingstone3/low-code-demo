@@ -21,6 +21,9 @@ export default class Container extends Base {
       children: [
         new Text({
           content: 123,
+          props: {
+            type: 'danger',
+          },
         }),
         new Table(),
       ],
