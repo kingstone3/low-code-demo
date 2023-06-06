@@ -1,8 +1,8 @@
 import React from 'react';
 
-import type Base from '../../../../../../base';
+import type Base from '../../../../base';
 
-import Col from '../../../../../../impls/Col';
+import Col from '../../../../impls/Col';
 
 import classes from './index.module.css';
 

@@ -3,7 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Factory from './components/Factory';
-import Editor from './components/Editor';
+import EditorNode from './components/EditorNode';
 import Config from './components/Config';
 
 import Container from './impls/Container';
@@ -42,8 +42,8 @@ export default function App() {
       <div className={classes.wrapper}>
         <Factory />
 
-        <Editor
-          schema={schema.current}
+        <EditorNode
+          element={schema.current}
           pushChildren={pushChildren}
           deleteChild={deleteChild}
         />

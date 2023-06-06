@@ -7,8 +7,14 @@ import { ElementInit } from '../../base/element';
 export default class Text extends Base {
   template = (<Typography.Text />);
 
-  constructor(init?: ElementInit) {
-    super('Text', init);
+  constructor(elementInit?: ElementInit) {
+    super({
+      label: 'Text',
+      ...elementInit,
+      style: {
+        ...elementInit?.style,
+      },
+    });
   }
 
   renderItems(): ReactNode {

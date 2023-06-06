@@ -7,8 +7,14 @@ import { ElementInit } from '../../base/element';
 export default class Row extends Base {
   template = (<AntdRow />);
 
-  constructor(init?: ElementInit) {
-    super('Row', init);
+  constructor(elementInit?: ElementInit) {
+    super({
+      label: 'Row',
+      ...elementInit,
+      style: {
+        ...elementInit?.style,
+      },
+    });
   }
 
   renderItems(): ReactNode {

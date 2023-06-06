@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as CSS from 'csstype';
 
-import Base from '.';
+import Base, { BaseInit } from '.';
 
 export interface ElementInit {
+  label?: string;
   children?: Base[];
   content?: string | number;
   props?: Record<string, unknown>;
@@ -20,13 +21,13 @@ export default abstract class Element {
   props: Record<string, unknown> | undefined;
   style: CSS.Properties<string | number> | undefined;
 
-  constructor(label: string, init?: ElementInit) {
-    this.id = `${label}_${uuidv4()}`;
+  constructor(init?: BaseInit) {
+    this.id = `${init?.element.label}_${uuidv4()}`;
 
-    this.children = init?.children || [];
-    this.content = init?.content;
-    this.props = init?.props;
-    this.style = init?.style;
+    this.children = init?.element.children || [];
+    this.content = init?.element.content;
+    this.props = init?.element.props;
+    this.style = init?.element.style;
   }
 
   findById(id: string): Element | undefined {

@@ -1,8 +1,18 @@
 import { Form } from 'antd';
 
+import { BaseInit } from '.';
+
 import Editor from './editor';
 
+export interface ConfigInit {}
+
 export default abstract class Config extends Editor {
+  abstract renderItems(): React.ReactNode;
+
+  constructor(init?: BaseInit) {
+    super(init);
+  }
+
   propRender = () => {
     return (
       <Form>
@@ -12,6 +22,4 @@ export default abstract class Config extends Editor {
       </Form>
     );
   };
-
-  abstract renderItems(): React.ReactNode;
 }
