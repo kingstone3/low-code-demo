@@ -19,28 +19,12 @@ export default function App() {
 
   const [, _flush] = useState(Symbol('flush'));
 
-  const pushChildren = useCallback((parent: Base, element: Base) => {
-    if (parent) {
-      element.parent = parent;
-      parent.children = parent.children || [];
-      parent.children.push(element);
-
-      _flush(Symbol('flush'));
-    }
-  }, []);
-
-  const deleteChild = useCallback((parent: Base, id: string) => {
-    if (parent) {
-      parent.children = parent.children!.filter((child) => {
-        return child.id !== id;
-      });
-
-      _flush(Symbol('flush'));
-    }
-  }, []);
-
   const flush = useCallback(() => {
     _flush(Symbol('flush'));
+  }, []);
+
+  const handlePreview = useCallback(() => {
+    console.log(schema.current);
   }, []);
 
   return (
@@ -48,16 +32,40 @@ export default function App() {
       <div className={classes.wrapper}>
         <Factory />
 
-        <EditorNode
-          element={schema.current}
-          currentConfigElement={currentConfigElement}
-          setCurrentConfigElement={setCurrentConfigElement}
-          pushChildren={pushChildren}
-          deleteChild={deleteChild}
-        />
+        <div style={{ flexGrow: 1, padding: 10 }}>
+          <EditorNode
+            element={schema.current}
+            currentConfigElement={currentConfigElement}
+            setCurrentConfigElement={setCurrentConfigElement}
+          />
+        </div>
 
-        <Config currentConfigElement={currentConfigElement} flush={flush} />
+        <Config
+          currentConfigElement={currentConfigElement}
+          flush={flush}
+          onPreview={handlePreview}
+        />
       </div>
     </DndProvider>
   );
 }
+
+// const pushChildren = useCallback((parent: Base, element: Base) => {
+//   if (parent) {
+//     element.parent = parent;
+//     parent.children = parent.children || [];
+//     parent.children.push(element);
+
+//     _flush(Symbol('flush'));
+//   }
+// }, []);
+
+// const deleteChild = useCallback((parent: Base, id: string) => {
+//   if (parent) {
+//     parent.children = parent.children!.filter((child) => {
+//       return child.id !== id;
+//     });
+
+//     _flush(Symbol('flush'));
+//   }
+// }, []);

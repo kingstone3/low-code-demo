@@ -4,21 +4,26 @@ import { Form, Input } from 'antd';
 import Base from '../../base';
 import { ElementInit } from '../../base/element';
 
+import classes from './index.module.css';
+
 export default class Text extends Base {
   isNative = false;
-  componentPath = ['Typography', 'Text'];
+  componentPath = ['Table'];
 
   constructor(elementInit?: ElementInit) {
     super({
-      label: 'Text',
+      label: 'Table',
       ...elementInit,
+      props: {
+        ...elementInit?.props,
+        className: classes.wrapper,
+      },
     });
   }
 
   getConfigFields(): Record<string, any> {
     return {
       id: this.id,
-      content: this.content,
     };
   }
 

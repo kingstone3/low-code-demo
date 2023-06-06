@@ -11,9 +11,6 @@ export default class Row extends Base {
     super({
       label: 'Row',
       ...elementInit,
-      style: {
-        ...elementInit?.style,
-      },
     });
   }
 

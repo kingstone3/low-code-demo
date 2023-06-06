@@ -10,14 +10,10 @@ export default function EditorNode({
   element,
   currentConfigElement,
   setCurrentConfigElement,
-  pushChildren,
-  deleteChild,
 }: {
   element: Base;
   currentConfigElement: Base | undefined;
   setCurrentConfigElement: (element: Base | undefined) => void;
-  pushChildren: (parent: Base, element: Base) => void;
-  deleteChild: (parent: Base, id: string) => void;
 }) {
   const isActive = element.id === currentConfigElement?.id;
 
@@ -30,7 +26,6 @@ export default function EditorNode({
 
   return (
     <div
-      className={classes.wrapper}
       onClick={(e) => {
         e.stopPropagation();
 
@@ -42,18 +37,13 @@ export default function EditorNode({
       }}
     >
       <Tag
-        {...{
-          ...element.props,
-          className: classnames(
-            element?.props?.className as classnames.ArgumentArray,
-            {
-              [classes.active]: isActive,
-            },
-          ),
-          key: element.id,
-          style: {
-            ...element.style,
-          },
+        {...element.props}
+        key={element.id}
+        className={classnames(element?.props?.className, classes.wrapper, {
+          [classes.active]: isActive,
+        })}
+        style={{
+          ...element.style,
         }}
       >
         {element.content
@@ -66,8 +56,6 @@ export default function EditorNode({
                   element={item}
                   currentConfigElement={currentConfigElement}
                   setCurrentConfigElement={setCurrentConfigElement}
-                  pushChildren={pushChildren}
-                  deleteChild={deleteChild}
                 />
               );
             })

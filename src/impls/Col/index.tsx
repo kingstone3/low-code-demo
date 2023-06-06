@@ -11,9 +11,6 @@ export default class Col extends Base {
     super({
       label: 'Col',
       ...elementInit,
-      style: {
-        ...elementInit?.style,
-      },
     });
   }
 

@@ -8,9 +8,11 @@ import classes from './index.module.css';
 export default function Config({
   currentConfigElement,
   flush,
+  onPreview,
 }: {
   currentConfigElement: Base | undefined;
   flush: () => void;
+  onPreview: () => void;
 }) {
   const [form] = Form.useForm();
 
@@ -18,6 +20,7 @@ export default function Config({
     if (!currentConfigElement) {
       form.resetFields();
     } else {
+      form.resetFields();
       form.setFieldsValue(currentConfigElement.getConfigFields());
     }
   }, [currentConfigElement, form]);
@@ -54,7 +57,13 @@ export default function Config({
               确认
             </Button>
 
-            <Button>预览</Button>
+            <Button
+              onClick={() => {
+                onPreview();
+              }}
+            >
+              预览
+            </Button>
           </Space>
         </Form.Item>
       </Form>

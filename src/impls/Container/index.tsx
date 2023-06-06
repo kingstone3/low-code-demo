@@ -4,6 +4,7 @@ import { Form, Input } from 'antd';
 import Base from '../../base';
 
 import Text from '../Text';
+import Table from '../Table';
 
 import classes from './index.module.css';
 
@@ -21,6 +22,7 @@ export default class Container extends Base {
         new Text({
           content: 123,
         }),
+        new Table(),
       ],
     });
   }
