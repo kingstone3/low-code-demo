@@ -1,5 +1,6 @@
-import { useCallback } from 'react';
-import { useImmer } from 'use-immer';
+import { useCallback, useRef, useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Factory from './components/Factory';
 import Editor from './components/Editor';
@@ -7,36 +8,48 @@ import Config from './components/Config';
 
 import Container from './impls/Container';
 
-import type Element from './base/element';
+import type Base from './base';
 
 import classes from './index.module.css';
 
 export default function App() {
-  const [{ schema }, setSchema] = useImmer<{ schema: Element }>({
-    schema: new Container(),
-  });
+  const schema = useRef<Base>(new Container());
 
-  const pushChildren = useCallback(
-    (parentId: string, element: Element) => {
-      setSchema((draft) => {
-        const parent = draft.schema.findById(parentId);
+  const [, _flush] = useState(Symbol('flush'));
 
-        if (parent) {
-          parent.children = parent.children || [];
-          parent.children.push(element);
-        }
+  const pushChildren = useCallback((parent: Base, element: Base) => {
+    if (parent) {
+      element.parent = parent;
+      parent.children = parent.children || [];
+      parent.children.push(element);
+
+      _flush(Symbol('flush'));
+    }
+  }, []);
+
+  const deleteChild = useCallback((parent: Base, id: string) => {
+    if (parent) {
+      parent.children = parent.children!.filter((child) => {
+        return child.id !== id;
       });
-    },
-    [setSchema],
-  );
+
+      _flush(Symbol('flush'));
+    }
+  }, []);
 
   return (
-    <div className={classes.wrapper}>
-      <Factory />
+    <DndProvider backend={HTML5Backend}>
+      <div className={classes.wrapper}>
+        <Factory />
 
-      <Editor schema={schema} pushChildren={pushChildren} />
+        <Editor
+          schema={schema.current}
+          pushChildren={pushChildren}
+          deleteChild={deleteChild}
+        />
 
-      <Config />
-    </div>
+        <Config />
+      </div>
+    </DndProvider>
   );
 }

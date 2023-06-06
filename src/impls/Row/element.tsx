@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
-import { Col as AntdCol } from 'antd';
+import { Row as AntdRow } from 'antd';
 
 import Base from '../../base';
 import { ElementInit } from '../../base/element';
 
-export default class Col extends Base {
-  template = (<AntdCol />);
+export default class Row extends Base {
+  template = (<AntdRow />);
 
   constructor(init?: ElementInit) {
-    super('Col', init);
+    super('Row', init);
   }
 
   renderItems(): ReactNode {

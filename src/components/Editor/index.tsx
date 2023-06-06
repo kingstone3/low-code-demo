@@ -1,19 +1,25 @@
 import EditorNode from './components/EditorNode';
 
-import type Element from '../../base/element';
+import type Base from '../../base';
 
 import classes from './index.module.css';
 
 export default function Editor({
   schema,
   pushChildren,
+  deleteChild,
 }: {
-  schema: Element;
-  pushChildren: (parentId: string, element: Element) => void;
+  schema: Base;
+  pushChildren: (parent: Base, string: Base) => void;
+  deleteChild: (parent: Base, id: string) => void;
 }) {
   return (
     <div className={classes.wrapper}>
-      <EditorNode element={schema} pushChildren={pushChildren} />
+      <EditorNode
+        element={schema}
+        pushChildren={pushChildren}
+        deleteChild={deleteChild}
+      />
     </div>
   );
 }

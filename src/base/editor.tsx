@@ -1,17 +1,5 @@
-import { Form } from 'antd';
+import Factory from './factory';
 
-export default abstract class Editor {
-  canEdit = true;
-
-  propRender = () => {
-    return (
-      <Form>
-        <Form.Item label="label"></Form.Item>
-
-        {this.renderItems()}
-      </Form>
-    );
-  };
-
-  abstract renderItems(): React.ReactNode;
+export default abstract class Editor extends Factory {
+  abstract template: React.ReactElement;
 }

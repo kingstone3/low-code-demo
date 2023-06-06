@@ -1,14 +1,27 @@
 import { ReactNode } from 'react';
+import Base from '../../base';
 
-import Element from '../../base/element';
-import Editor from '../../base/editor';
+import Row from '../Row/element';
 
-import Row from '../Row';
+export default class Container extends Base {
+  template = (<div />);
 
-export default class ContainerComponent extends Element {
   constructor() {
     super('Container', {
-      children: [new Row(), new Row(), new Row()],
+      children: [
+        new Row({
+          style: {
+            minHeight: '100px',
+
+            padding: '10px',
+            gap: '10px',
+
+            backgroundColor: '#ffffff',
+
+            userSelect: 'none',
+          },
+        }),
+      ],
       style: {
         display: 'flex',
         flexDirection: 'column',
@@ -21,14 +34,6 @@ export default class ContainerComponent extends Element {
       },
     });
   }
-
-  template = (<div />);
-
-  editor = new ContainEditor();
-}
-
-class ContainEditor extends Editor {
-  canEdit = false;
 
   renderItems(): ReactNode {
     throw new Error('Method not implemented.');

@@ -1,38 +1,49 @@
 import React from 'react';
 
-import DropArea from '../../../../render/components/DropArea';
-import DataLoader from '../../../../render/components/DataLoader';
+import DropArea from './components/DropArea';
 
-import type Element from '../../../../base/element';
+import type Base from '../../../../base';
 
 export default function EditorNode({
   element,
   pushChildren,
+  deleteChild,
 }: {
-  element: Element;
-  pushChildren: (parentId: string, element: Element) => void;
+  element: Base;
+  pushChildren: (parent: Base, element: Base) => void;
+  deleteChild: (parent: Base, id: string) => void;
 }) {
-  console.log(element.style);
   return (
-    <DropArea id={element.id} pushChildren={pushChildren}>
-      <DataLoader dataLoader={element.dataLoader}>
-        {React.cloneElement(element.template, {
+    <DropArea
+      element={element}
+      pushChildren={pushChildren}
+      deleteChild={deleteChild}
+    >
+      {React.cloneElement(
+        element.template,
+        {
           ...element.props,
           key: element.id,
-          style: { ...element.template?.props.style, ...element.style },
-          children: Array.isArray(element.children)
-            ? element.children.map((item) => {
-                return (
-                  <EditorNode
-                    key={item.id}
-                    element={item}
-                    pushChildren={pushChildren}
-                  />
-                );
-              })
-            : undefined,
-        })}
-      </DataLoader>
+          style: {
+            ...element.template?.props.style,
+            ...element.style,
+          },
+        },
+        element.content
+          ? element.content
+          : Array.isArray(element.children)
+          ? element.children.map((item) => {
+              return (
+                <EditorNode
+                  key={item.id}
+                  element={item}
+                  pushChildren={pushChildren}
+                  deleteChild={deleteChild}
+                />
+              );
+            })
+          : null,
+      )}
     </DropArea>
   );
 }

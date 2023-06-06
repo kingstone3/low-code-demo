@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
-import { Col as AntdCol } from 'antd';
+import { Typography } from 'antd';
 
 import Base from '../../base';
 import { ElementInit } from '../../base/element';
 
-export default class Col extends Base {
-  template = (<AntdCol />);
+export default class Text extends Base {
+  template = (<Typography.Text />);
 
   constructor(init?: ElementInit) {
-    super('Col', init);
+    super('Text', init);
   }
 
   renderItems(): ReactNode {
