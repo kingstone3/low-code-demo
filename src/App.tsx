@@ -54,6 +54,7 @@ export default function App() {
       </DndProvider>
 
       <Modal
+        destroyOnClose
         open={!!previewSchema}
         width="100vw"
         style={{ top: 0, height: '100vh' }}

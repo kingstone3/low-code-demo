@@ -25,7 +25,20 @@ export default class Container extends Base {
             type: 'danger',
           },
         }),
-        new Table(),
+        new Table({
+          props: {
+            columns: [
+              {
+                title: '实例',
+                dataIndex: 'a',
+              },
+              {
+                title: '实例2',
+                dataIndex: 'b',
+              },
+            ],
+          },
+        }),
       ],
     });
   }
