@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
-import { Row as AntdRow } from 'antd';
 
 import Base from '../../base';
 import { ElementInit } from '../../base/element';
 
 export default class Row extends Base {
-  template = (<AntdRow />);
+  isNative = false;
+  componentPath = ['Row'];
 
   constructor(elementInit?: ElementInit) {
     super({
@@ -17,7 +17,15 @@ export default class Row extends Base {
     });
   }
 
-  renderItems(): ReactNode {
+  getConfigFields(): Record<string, any> {
+    throw new Error('Method not implemented.');
+  }
+
+  renderConfigItems(): ReactNode {
+    throw new Error('Method not implemented.');
+  }
+
+  hanldeConfigFinish(values: Record<string, any>): void {
     throw new Error('Method not implemented.');
   }
 }

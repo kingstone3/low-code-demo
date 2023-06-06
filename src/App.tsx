@@ -15,6 +15,8 @@ import classes from './index.module.css';
 export default function App() {
   const schema = useRef<Base>(new Container());
 
+  const [currentConfigElement, setCurrentConfigElement] = useState<Base>();
+
   const [, _flush] = useState(Symbol('flush'));
 
   const pushChildren = useCallback((parent: Base, element: Base) => {
@@ -37,6 +39,10 @@ export default function App() {
     }
   }, []);
 
+  const flush = useCallback(() => {
+    _flush(Symbol('flush'));
+  }, []);
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className={classes.wrapper}>
@@ -44,11 +50,13 @@ export default function App() {
 
         <EditorNode
           element={schema.current}
+          currentConfigElement={currentConfigElement}
+          setCurrentConfigElement={setCurrentConfigElement}
           pushChildren={pushChildren}
           deleteChild={deleteChild}
         />
 
-        <Config />
+        <Config currentConfigElement={currentConfigElement} flush={flush} />
       </div>
     </DndProvider>
   );
