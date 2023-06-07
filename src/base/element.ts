@@ -3,6 +3,8 @@ import * as CSS from 'csstype';
 
 import Base, { BaseInit } from '.';
 
+import { schema } from '../impls/Container';
+
 export interface ElementInit {
   label?: string;
   children?: Base[];

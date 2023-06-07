@@ -16,9 +16,10 @@ export default class Container extends Base {
   constructor(elementInit?: ElementInit) {
     super({
       label: 'Container',
-      props: Object.assign(elementInit?.props ?? {}, {
+      props: {
+        ...elementInit?.props,
         className: classes.wrapper,
-      }),
+      },
       children: [
         new Text({
           content: 123,
@@ -61,6 +62,11 @@ export default class Container extends Base {
   hanldeConfigFinish(values: Record<string, any>): void {
     this.style = this.style || {};
 
-    this.style.backgroundColor = values.backgroundColor;
+    this.style = {
+      ...this.style,
+      backgroundColor: values.backgroundColor,
+    };
   }
 }
+
+export const schema = new Container();

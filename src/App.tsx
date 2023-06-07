@@ -8,22 +8,20 @@ import EditorNode from './components/EditorNode';
 import ViewNode from './components/ViewNode';
 import Config from './components/Config';
 
-import Container from './impls/Container';
+import { schema } from './impls/Container';
 
 import type Base from './base';
 
 import classes from './app.module.css';
 
 export default function App() {
-  const schema = useRef<Base>(new Container());
-
   const [currentConfigElement, setCurrentConfigElement] = useState<Base>();
   const [viewSchema, setViewSchema] = useState<Partial<Base>>();
 
   const [, _flush] = useState(Symbol('flush'));
 
   const handleView = useCallback(() => {
-    setViewSchema(JSON.parse(JSON.stringify(schema.current)));
+    setViewSchema(JSON.parse(JSON.stringify(schema)));
   }, []);
 
   const flush = useCallback(() => {
@@ -38,7 +36,7 @@ export default function App() {
 
           <div style={{ flexGrow: 1, padding: 10 }}>
             <EditorNode
-              element={schema.current}
+              element={schema}
               currentConfigElement={currentConfigElement}
               setCurrentConfigElement={setCurrentConfigElement}
             />
