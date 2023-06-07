@@ -27,11 +27,11 @@ export default class Container extends Base {
           props: {
             columns: [
               {
-                title: '实例',
+                title: '事例字段',
                 dataIndex: 'a',
               },
               {
-                title: '实例2',
+                title: '事例字段2',
                 dataIndex: 'b',
               },
             ],
