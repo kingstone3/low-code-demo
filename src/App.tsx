@@ -33,10 +33,14 @@ export default function App() {
 
   function handleDragStart(event) {
     setActiveId(event.active.id);
+
+    setCurrentConfigElement(undefined);
   }
 
   function handleDragEnd() {
     setActiveId(null);
+
+    setCurrentConfigElement(undefined);
   }
 
   return (
