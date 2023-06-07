@@ -5,6 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Factory from './components/Factory';
 import EditorNode from './components/EditorNode';
+import PreviewNode from './components/PreviewNode';
 import Config from './components/Config';
 
 import Container from './impls/Container';
@@ -12,23 +13,21 @@ import Container from './impls/Container';
 import type Base from './base';
 
 import classes from './index.module.css';
-import PreviewNode from './components/PreviewNode';
 
 export default function App() {
   const schema = useRef<Base>(new Container());
 
   const [currentConfigElement, setCurrentConfigElement] = useState<Base>();
-
   const [previewSchema, setPreviewSchema] = useState<Partial<Base>>();
 
   const [, _flush] = useState(Symbol('flush'));
 
-  const flush = useCallback(() => {
-    _flush(Symbol('flush'));
-  }, []);
-
   const handlePreview = useCallback(() => {
     setPreviewSchema(JSON.parse(JSON.stringify(schema.current)));
+  }, []);
+
+  const flush = useCallback(() => {
+    _flush(Symbol('flush'));
   }, []);
 
   return (
