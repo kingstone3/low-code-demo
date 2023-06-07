@@ -13,7 +13,7 @@ export default class Table extends Base {
 
   constructor(elementInit?: ElementInit) {
     super({
-      label: 'Table',
+      type: 'Table',
       ...elementInit,
       className: classes.wrapper,
     });

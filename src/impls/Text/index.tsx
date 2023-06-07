@@ -10,7 +10,7 @@ export default class Text extends Base {
 
   constructor(elementInit?: ElementInit) {
     super({
-      label: 'Text',
+      type: 'Text',
       ...elementInit,
     });
   }

@@ -9,7 +9,7 @@ export default class Col extends Base {
 
   constructor(elementInit: ElementInit) {
     super({
-      label: 'Col',
+      type: 'Col',
       ...elementInit,
     });
   }

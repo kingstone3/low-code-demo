@@ -9,7 +9,7 @@ export default class Row extends Base {
 
   constructor(elementInit?: ElementInit) {
     super({
-      label: 'Row',
+      type: 'Row',
       ...elementInit,
     });
   }

@@ -4,7 +4,7 @@ import * as CSS from 'csstype';
 import Base, { BaseInit } from '.';
 
 export interface ElementInit {
-  label?: string;
+  type?: string;
   content?: string | number;
   children?: Base[];
   props?: Record<string, unknown>;
@@ -14,6 +14,7 @@ export interface ElementInit {
 
 export default abstract class Element {
   id: string;
+  type: string | undefined;
   parent: Base | undefined;
 
   children: Base[] | undefined;
@@ -24,7 +25,8 @@ export default abstract class Element {
   className: string | undefined;
 
   constructor(init?: BaseInit) {
-    this.id = `${init?.element.label}_${uuidv4()}`;
+    this.id = `${init?.element.type}_${uuidv4()}`;
+    this.type = init?.element.type;
 
     this.content = init?.element.content;
     this.children = init?.element.children || [];
