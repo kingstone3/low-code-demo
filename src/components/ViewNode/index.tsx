@@ -5,9 +5,9 @@ import { get } from 'lodash-es';
 
 import type Base from '../../base';
 
-export default function PreviewNode({ element }: { element: Partial<Base> }) {
-  const [loading, setLoading] = useState(element.request ? true : false);
+export default function ViewNode({ element }: { element: Partial<Base> }) {
   const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(element.request ? true : false);
 
   let Tag;
   if (element.isNative) {
@@ -40,15 +40,13 @@ export default function PreviewNode({ element }: { element: Partial<Base> }) {
         {...data}
         key={element.id}
         className={element?.props?.className}
-        style={{
-          ...element.style,
-        }}
+        style={element.style}
       >
         {element.content
           ? element.content
           : Array.isArray(element.children)
           ? element.children.map((item) => {
-              return <PreviewNode key={item.id} element={item} />;
+              return <ViewNode key={item.id} element={item} />;
             })
           : null}
       </Tag>

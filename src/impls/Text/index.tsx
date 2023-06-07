@@ -15,7 +15,7 @@ export default class Text extends Base {
     });
   }
 
-  getConfigFields(): Record<string, any> {
+  getConfigFields(): Record<string, string | number | undefined> {
     return {
       content: this.content,
     };
@@ -31,7 +31,9 @@ export default class Text extends Base {
     );
   }
 
-  hanldeConfigFinish(values: Record<string, any>): void {
+  hanldeConfigFinish(
+    values: Record<string, string | number | undefined>,
+  ): void {
     this.content = values.content;
   }
 }

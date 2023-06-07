@@ -26,6 +26,9 @@ export default function EditorNode({
 
   return (
     <div
+      className={classnames(classes.wrapper, {
+        [classes.active]: isActive,
+      })}
       onClick={(e) => {
         e.stopPropagation();
 
@@ -39,12 +42,8 @@ export default function EditorNode({
       <Tag
         {...element.props}
         key={element.id}
-        className={classnames(element?.props?.className, classes.wrapper, {
-          [classes.active]: isActive,
-        })}
-        style={{
-          ...element.style,
-        }}
+        className={element?.props?.className}
+        style={element.style}
       >
         {element.content
           ? element.content

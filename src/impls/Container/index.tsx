@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Form, Input } from 'antd';
 
 import Base from '../../base';
+import { ElementInit } from '../../base/element';
 
 import Text from '../Text';
 import Table from '../Table';
@@ -12,19 +13,17 @@ export default class Container extends Base {
   isNative = true;
   componentPath = ['div'];
 
-  constructor() {
+  constructor(elementInit?: ElementInit) {
     super({
       label: 'Container',
-      props: {
+      props: Object.assign(elementInit?.props ?? {}, {
         className: classes.wrapper,
-      },
+      }),
       children: [
         new Text({
           content: 123,
-          props: {
-            type: 'danger',
-          },
         }),
+
         new Table({
           props: {
             columns: [

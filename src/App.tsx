@@ -5,25 +5,25 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Factory from './components/Factory';
 import EditorNode from './components/EditorNode';
-import PreviewNode from './components/PreviewNode';
+import ViewNode from './components/ViewNode';
 import Config from './components/Config';
 
 import Container from './impls/Container';
 
 import type Base from './base';
 
-import classes from './index.module.css';
+import classes from './app.module.css';
 
 export default function App() {
   const schema = useRef<Base>(new Container());
 
   const [currentConfigElement, setCurrentConfigElement] = useState<Base>();
-  const [previewSchema, setPreviewSchema] = useState<Partial<Base>>();
+  const [viewSchema, setViewSchema] = useState<Partial<Base>>();
 
   const [, _flush] = useState(Symbol('flush'));
 
-  const handlePreview = useCallback(() => {
-    setPreviewSchema(JSON.parse(JSON.stringify(schema.current)));
+  const handleView = useCallback(() => {
+    setViewSchema(JSON.parse(JSON.stringify(schema.current)));
   }, []);
 
   const flush = useCallback(() => {
@@ -47,43 +47,23 @@ export default function App() {
           <Config
             currentConfigElement={currentConfigElement}
             flush={flush}
-            onPreview={handlePreview}
+            onPreview={handleView}
           />
         </div>
       </DndProvider>
 
       <Modal
         destroyOnClose
-        open={!!previewSchema}
+        open={!!viewSchema}
         width="100vw"
         style={{ top: 0, height: '100vh' }}
         footer={null}
         onCancel={() => {
-          setPreviewSchema(undefined);
+          setViewSchema(undefined);
         }}
       >
-        <PreviewNode element={previewSchema!} />
+        <ViewNode element={viewSchema!} />
       </Modal>
     </>
   );
 }
-
-// const pushChildren = useCallback((parent: Base, element: Base) => {
-//   if (parent) {
-//     element.parent = parent;
-//     parent.children = parent.children || [];
-//     parent.children.push(element);
-
-//     _flush(Symbol('flush'));
-//   }
-// }, []);
-
-// const deleteChild = useCallback((parent: Base, id: string) => {
-//   if (parent) {
-//     parent.children = parent.children!.filter((child) => {
-//       return child.id !== id;
-//     });
-
-//     _flush(Symbol('flush'));
-//   }
-// }, []);

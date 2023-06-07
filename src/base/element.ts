@@ -11,10 +11,30 @@ export interface ElementInit {
   style?: CSS.Properties<string | number>;
 }
 
+// TODO: 维护元素间关系
+// const pushChildren = useCallback((parent: Base, element: Base) => {
+//   if (parent) {
+//     element.parent = parent;
+//     parent.children = parent.children || [];
+//     parent.children.push(element);
+
+//     _flush(Symbol('flush'));
+//   }
+// }, []);
+
+// const deleteChild = useCallback((parent: Base, id: string) => {
+//   if (parent) {
+//     parent.children = parent.children!.filter((child) => {
+//       return child.id !== id;
+//     });
+
+//     _flush(Symbol('flush'));
+//   }
+// }, []);
 export default abstract class Element {
   id: string;
-
   parent: Base | undefined;
+
   children: Base[] | undefined;
   content: string | number | undefined;
 
@@ -26,6 +46,7 @@ export default abstract class Element {
 
     this.children = init?.element.children || [];
     this.content = init?.element.content;
+
     this.props = init?.element.props;
     this.style = init?.element.style;
   }
@@ -53,22 +74,6 @@ export default abstract class Element {
     }
 
     deepSearch([this], id);
-
-    return result;
-  }
-
-  getPreviewObject(): object {
-    const result = {};
-
-    const deepWalk = (tree: Element[]) => {
-      for (let i = 0; i < tree.length; i++) {
-        if ((tree[i]?.children?.length ?? 0) > 0) {
-          deepWalk(tree[i].children!);
-        }
-      }
-    };
-
-    deepWalk([this]);
 
     return result;
   }
