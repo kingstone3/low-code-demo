@@ -8,6 +8,7 @@ export default class Row extends Base {
   componentPath = ['Row'];
 
   static previewNode = (<div>Row</div>);
+  static type = 'Row';
 
   constructor(elementInit?: ElementInit) {
     super({

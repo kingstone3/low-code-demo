@@ -6,6 +6,8 @@ import Row from '../../impls/Row';
 import Table from '../../impls/Table';
 import Text from '../../impls/Text';
 
+import Card from './components/Card';
+
 import classes from './index.module.css';
 
 export default function Factory() {
@@ -17,11 +19,7 @@ export default function Factory() {
 
       <Space wrap>
         {[Col, Container, Row, Table, Text].map((item, index) => {
-          return (
-            <div key={index} className={classes.card}>
-              {item.previewNode}
-            </div>
-          );
+          return <Card key={index} item={item} />;
         })}
       </Space>
     </div>

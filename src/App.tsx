@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { Modal } from 'antd';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndContext, DragOverlay } from '@dnd-kit/core';
 
 import Factory from './components/Factory';
 import EditorNode from './components/EditorNode';
@@ -13,10 +12,13 @@ import { schema } from './impls/Container';
 import type Base from './base';
 
 import classes from './app.module.css';
+import classClasses from './components/Factory/components/Card/index.module.css';
 
 export default function App() {
   const [currentConfigElement, setCurrentConfigElement] = useState<Base>();
   const [viewSchema, setViewSchema] = useState<Partial<Base>>();
+
+  const [activeId, setActiveId] = useState(null);
 
   const [, _flush] = useState(Symbol('flush'));
 
@@ -29,11 +31,19 @@ export default function App() {
     _flush(Symbol('flush'));
   }, []);
 
+  function handleDragStart(event) {
+    setActiveId(event.active.id);
+  }
+
+  function handleDragEnd() {
+    setActiveId(null);
+  }
+
   return (
     <>
-      <DndProvider backend={HTML5Backend}>
+      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className={classes.wrapper}>
-          <Factory />
+          <Factory activeId={activeId} />
 
           <div style={{ flexGrow: 1, padding: 10 }}>
             <EditorNode
@@ -49,7 +59,13 @@ export default function App() {
             onPreview={handleView}
           />
         </div>
-      </DndProvider>
+
+        <DragOverlay>
+          {activeId ? (
+            <div className={classClasses.wrapper}>{activeId}</div>
+          ) : null}
+        </DragOverlay>
+      </DndContext>
 
       <Modal
         destroyOnClose

@@ -22,6 +22,7 @@ export default function ViewNode({ element }: { element: Partial<Base> }) {
         setLoading(true);
 
         const result = await Object.getPrototypeOf(
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           async function () {},
         ).constructor(element.request)();
 

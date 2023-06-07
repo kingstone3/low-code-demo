@@ -1,8 +1,11 @@
+import { useMemo } from 'react';
 import * as Antd from 'antd';
 import classnames from 'classnames';
 import { get } from 'lodash-es';
 
 import type Base from '../../base';
+
+import Droppable from '../Droppable';
 
 import classes from './index.module.css';
 
@@ -15,7 +18,9 @@ export default function EditorNode({
   currentConfigElement: Base | undefined;
   setCurrentConfigElement: (element: Base | undefined) => void;
 }) {
-  const isActive = element.id === currentConfigElement?.id;
+  const isActive = useMemo(() => {
+    return element.id === currentConfigElement?.id;
+  }, [currentConfigElement?.id, element.id]);
 
   let Tag;
   if (element.isNative) {
@@ -25,7 +30,8 @@ export default function EditorNode({
   }
 
   return (
-    <div
+    <Droppable
+      id={element.id}
       className={classnames(classes.wrapper, {
         [classes.active]: isActive,
       })}
@@ -60,6 +66,6 @@ export default function EditorNode({
             })
           : null}
       </Tag>
-    </div>
+    </Droppable>
   );
 }

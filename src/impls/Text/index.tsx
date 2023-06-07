@@ -9,6 +9,7 @@ export default class Text extends Base {
   componentPath = ['Typography', 'Text'];
 
   static previewNode = (<div>Text</div>);
+  static type = 'Text';
 
   constructor(elementInit?: ElementInit) {
     super({

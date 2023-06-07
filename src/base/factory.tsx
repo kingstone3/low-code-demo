@@ -12,4 +12,5 @@ export default abstract class Factory extends Element {
   }
 
   static previewNode: React.ReactNode;
+  static type: string | undefined;
 }

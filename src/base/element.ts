@@ -14,7 +14,6 @@ export interface ElementInit {
 
 export default abstract class Element {
   id: string;
-  type: string | undefined;
   parent: Base | undefined;
 
   children: Base[] | undefined;
@@ -26,7 +25,6 @@ export default abstract class Element {
 
   constructor(init?: BaseInit) {
     this.id = `${init?.element.type}_${uuidv4()}`;
-    this.type = init?.element.type;
 
     this.content = init?.element.content;
     this.children = init?.element.children || [];
@@ -61,13 +59,13 @@ export default abstract class Element {
 
     this.appendChildByIndex(
       element,
-      this.parent?.findChildIndexById(this.id)! - 1,
+      (this.parent?.findChildIndexById(this.id) ?? 1) - 1,
     );
   }
 
   insertChildAfterSelf(element: Base): void {
     element.parent = this.parent;
 
-    this.appendChildByIndex(element, this.parent?.findChildIndexById(this.id)!);
+    this.appendChildByIndex(element, this.parent?.findChildIndexById(this.id));
   }
 }

@@ -14,6 +14,7 @@ export default class Container extends Base {
   componentPath = ['div'];
 
   static previewNode = (<div>Container</div>);
+  static type = 'Container';
 
   constructor(elementInit?: ElementInit) {
     super({
