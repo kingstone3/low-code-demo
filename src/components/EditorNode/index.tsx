@@ -42,7 +42,7 @@ export default function EditorNode({
       <Tag
         {...element.props}
         key={element.id}
-        className={element?.props?.className}
+        className={element.className}
         style={element.style}
       >
         {element.content

@@ -16,10 +16,8 @@ export default class Container extends Base {
   constructor(elementInit?: ElementInit) {
     super({
       label: 'Container',
-      props: {
-        ...elementInit?.props,
-        className: classes.wrapper,
-      },
+      ...elementInit,
+      className: classes.wrapper,
       children: [
         new Text({
           content: 123,

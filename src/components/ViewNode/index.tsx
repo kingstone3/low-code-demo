@@ -33,13 +33,32 @@ export default function ViewNode({ element }: { element: Partial<Base> }) {
     init();
   }, [element.request]);
 
-  return (
-    <Spin spinning={loading}>
+  if (element.request) {
+    return (
+      <Spin spinning={loading}>
+        <Tag
+          {...element.props}
+          {...data}
+          key={element.id}
+          className={element.className}
+          style={element.style}
+        >
+          {element.content
+            ? element.content
+            : Array.isArray(element.children)
+            ? element.children.map((item) => {
+                return <ViewNode key={item.id} element={item} />;
+              })
+            : null}
+        </Tag>
+      </Spin>
+    );
+  } else {
+    return (
       <Tag
         {...element.props}
-        {...data}
         key={element.id}
-        className={element?.props?.className}
+        className={element.className}
         style={element.style}
       >
         {element.content
@@ -50,6 +69,6 @@ export default function ViewNode({ element }: { element: Partial<Base> }) {
             })
           : null}
       </Tag>
-    </Spin>
-  );
+    );
+  }
 }

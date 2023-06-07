@@ -5,7 +5,7 @@ import { ElementInit } from '../../base/element';
 
 import classes from './index.module.css';
 
-export default class Text extends Base {
+export default class Table extends Base {
   isNative = false;
   componentPath = ['Table'];
 
@@ -15,10 +15,7 @@ export default class Text extends Base {
     super({
       label: 'Table',
       ...elementInit,
-      props: {
-        ...elementInit?.props,
-        className: classes.wrapper,
-      },
+      className: classes.wrapper,
     });
   }
 

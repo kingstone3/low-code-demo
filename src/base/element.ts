@@ -11,6 +11,7 @@ export interface ElementInit {
   content?: string | number;
   props?: Record<string, unknown>;
   style?: CSS.Properties<string | number>;
+  className?: string;
 }
 
 // TODO: 维护元素间关系
@@ -42,6 +43,7 @@ export default abstract class Element {
 
   props: Record<string, unknown> | undefined;
   style: CSS.Properties<string | number> | undefined;
+  className: string | undefined;
 
   constructor(init?: BaseInit) {
     this.id = `${init?.element.label}_${uuidv4()}`;
@@ -51,6 +53,8 @@ export default abstract class Element {
 
     this.props = init?.element.props;
     this.style = init?.element.style;
+
+    this.className = init?.element.className;
   }
 
   findById(id: string): Element | undefined {
