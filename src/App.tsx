@@ -21,7 +21,8 @@ export default function App() {
   const [, _flush] = useState(Symbol('flush'));
 
   const handleView = useCallback(() => {
-    setViewSchema(JSON.parse(JSON.stringify(schema)));
+    // TODO: 对 schema 实现 toString 方法，并支持解析为 object
+    setViewSchema(schema);
   }, []);
 
   const flush = useCallback(() => {
