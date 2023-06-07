@@ -3,37 +3,15 @@ import * as CSS from 'csstype';
 
 import Base, { BaseInit } from '.';
 
-import { schema } from '../impls/Container';
-
 export interface ElementInit {
   label?: string;
-  children?: Base[];
   content?: string | number;
+  children?: Base[];
   props?: Record<string, unknown>;
   style?: CSS.Properties<string | number>;
   className?: string;
 }
 
-// TODO: 维护元素间关系
-// const pushChildren = useCallback((parent: Base, element: Base) => {
-//   if (parent) {
-//     element.parent = parent;
-//     parent.children = parent.children || [];
-//     parent.children.push(element);
-
-//     _flush(Symbol('flush'));
-//   }
-// }, []);
-
-// const deleteChild = useCallback((parent: Base, id: string) => {
-//   if (parent) {
-//     parent.children = parent.children!.filter((child) => {
-//       return child.id !== id;
-//     });
-
-//     _flush(Symbol('flush'));
-//   }
-// }, []);
 export default abstract class Element {
   id: string;
   parent: Base | undefined;
@@ -48,8 +26,11 @@ export default abstract class Element {
   constructor(init?: BaseInit) {
     this.id = `${init?.element.label}_${uuidv4()}`;
 
-    this.children = init?.element.children || [];
     this.content = init?.element.content;
+    this.children = init?.element.children || [];
+    this.children?.forEach((child) => {
+      child.parent = this as unknown as Base;
+    });
 
     this.props = init?.element.props;
     this.style = init?.element.style;
@@ -57,30 +38,34 @@ export default abstract class Element {
     this.className = init?.element.className;
   }
 
-  findById(id: string): Element | undefined {
-    let result: Element | undefined;
-    let isGet = false;
+  findChildIndexById(id: string): number | undefined {
+    return this.children?.findIndex((child) => {
+      return child.id === id;
+    });
+  }
 
-    function deepSearch(tree: Element[], id: string) {
-      for (let i = 0; i < tree.length; i++) {
-        if ((tree[i]?.children?.length ?? 0) > 0) {
-          deepSearch(tree[i].children!, id);
-        }
+  appendChildByIndex(element: Base, index = this.children?.length ?? 0): void {
+    element.parent = this as unknown as Base;
 
-        if (id === tree[i].id || isGet) {
-          if (!isGet) {
-            result = tree[i];
-          }
+    this.children = [
+      ...(this.children?.slice(0, index) ?? []),
+      element,
+      ...(this.children?.slice(index) ?? []),
+    ];
+  }
 
-          isGet = true;
+  insertChildBeforeSelf(element: Base): void {
+    element.parent = this.parent;
 
-          break;
-        }
-      }
-    }
+    this.appendChildByIndex(
+      element,
+      this.parent?.findChildIndexById(this.id)! - 1,
+    );
+  }
 
-    deepSearch([this], id);
+  insertChildAfterSelf(element: Base): void {
+    element.parent = this.parent;
 
-    return result;
+    this.appendChildByIndex(element, this.parent?.findChildIndexById(this.id)!);
   }
 }

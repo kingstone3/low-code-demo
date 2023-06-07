@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Form, Input } from 'antd';
 
 import Base from '../../base';
-import { ElementInit } from '../../base/element';
+import Element, { ElementInit } from '../../base/element';
 
 import Text from '../Text';
 import Table from '../Table';
@@ -68,3 +68,30 @@ export default class Container extends Base {
 }
 
 export const schema = new Container();
+
+export function findById(id: string): Element | undefined {
+  let result: Element | undefined;
+  let isGet = false;
+
+  function deepSearch(tree: Element[], id: string) {
+    for (let i = 0; i < tree.length; i++) {
+      if ((tree[i]?.children?.length ?? 0) > 0) {
+        deepSearch(tree[i].children!, id);
+      }
+
+      if (id === tree[i].id || isGet) {
+        if (!isGet) {
+          result = tree[i];
+        }
+
+        isGet = true;
+
+        break;
+      }
+    }
+  }
+
+  deepSearch([schema], id);
+
+  return result;
+}
