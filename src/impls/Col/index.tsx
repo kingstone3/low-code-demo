@@ -7,10 +7,12 @@ export default class Col extends Base {
   isNative = false;
   componentPath = ['Col'];
 
+  static previewNode = (<div>Col</div>);
+
   constructor(elementInit: ElementInit) {
     super({
-      type: 'Col',
       ...elementInit,
+      type: 'Col',
     });
   }
 

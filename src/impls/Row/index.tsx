@@ -7,10 +7,12 @@ export default class Row extends Base {
   isNative = false;
   componentPath = ['Row'];
 
+  static previewNode = (<div>Row</div>);
+
   constructor(elementInit?: ElementInit) {
     super({
-      type: 'Row',
       ...elementInit,
+      type: 'Row',
     });
   }
 

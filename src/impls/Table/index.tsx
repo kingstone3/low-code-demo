@@ -11,10 +11,12 @@ export default class Table extends Base {
 
   hasRequest = true;
 
+  static previewNode = (<div>Table</div>);
+
   constructor(elementInit?: ElementInit) {
     super({
-      type: 'Table',
       ...elementInit,
+      type: 'Table',
       className: classes.wrapper,
     });
   }

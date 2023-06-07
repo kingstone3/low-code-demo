@@ -13,10 +13,12 @@ export default class Container extends Base {
   isNative = true;
   componentPath = ['div'];
 
+  static previewNode = (<div>Container</div>);
+
   constructor(elementInit?: ElementInit) {
     super({
-      type: 'Container',
       ...elementInit,
+      type: 'Container',
       className: classes.wrapper,
       children: [
         new Text({

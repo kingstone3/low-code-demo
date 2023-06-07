@@ -8,10 +8,12 @@ export default class Text extends Base {
   isNative = false;
   componentPath = ['Typography', 'Text'];
 
+  static previewNode = (<div>Text</div>);
+
   constructor(elementInit?: ElementInit) {
     super({
-      type: 'Text',
       ...elementInit,
+      type: 'Text',
     });
   }
 
