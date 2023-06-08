@@ -60,7 +60,14 @@ export default function App() {
         <div className={classes.wrapper}>
           <Factory activeId={activeId} />
 
-          <div style={{ flexGrow: 1, padding: 10 }}>
+          <div
+            style={{
+              flexGrow: 1,
+              height: 'calc(100vh - 20px)',
+              padding: 10,
+              overflowY: 'scroll',
+            }}
+          >
             <EditorNode
               element={schema}
               currentConfigElement={currentConfigElement}

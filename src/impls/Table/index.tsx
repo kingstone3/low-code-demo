@@ -26,6 +26,34 @@ export default class Table extends Base {
             title: '示例字段2',
             dataIndex: 'b',
           },
+          {
+            title: '示例字段2',
+            dataIndex: 'c',
+          },
+          {
+            title: '示例字段3',
+            dataIndex: 'd',
+          },
+          {
+            title: '示例字段4',
+            dataIndex: 'e',
+          },
+          {
+            title: '示例字段5',
+            dataIndex: 'f',
+          },
+          {
+            title: '示例字段6',
+            dataIndex: 'g',
+          },
+          {
+            title: '示例字段7',
+            dataIndex: 'h',
+          },
+          {
+            title: '示例字段8',
+            dataIndex: 'i',
+          },
         ],
       },
       ...elementInit,
