@@ -32,8 +32,24 @@ export default function Config({
 
   return (
     <div className={classes.wrapper}>
-      <Typography.Title level={4} style={{ marginTop: 0 }}>
+      <Typography.Title
+        level={4}
+        style={{
+          marginTop: 0,
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
         配置
+        <Button
+          type="primary"
+          onClick={() => {
+            onPreview();
+          }}
+        >
+          预览
+        </Button>
       </Typography.Title>
 
       <Form
@@ -72,14 +88,6 @@ export default function Config({
               disabled={!currentConfigElement}
             >
               确认
-            </Button>
-
-            <Button
-              onClick={() => {
-                onPreview();
-              }}
-            >
-              预览
             </Button>
           </Space>
         </Form.Item>
