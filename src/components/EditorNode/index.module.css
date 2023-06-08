@@ -1,0 +1,7 @@
+.wrapper {
+  border: 2px dashed transparent;
+
+  &.active {
+    border-color: #006cff;
+  }
+}
