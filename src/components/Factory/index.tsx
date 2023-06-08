@@ -1,10 +1,9 @@
 import { Space, Typography } from 'antd';
 
-import Col from '../../impls/Col';
 import Container from '../../impls/Container';
-import Row from '../../impls/Row';
 import Table from '../../impls/Table';
 import Text from '../../impls/Text';
+import Image from '../../impls/Image';
 
 import Card from './components/Card';
 
@@ -18,7 +17,7 @@ export default function Factory() {
       </Typography.Title>
 
       <Space wrap>
-        {[Col, Container, Row, Table, Text].map((item, index) => {
+        {[Container, Text, Table, Image].map((item, index) => {
           return <Card key={index} item={item} />;
         })}
       </Space>

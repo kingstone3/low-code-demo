@@ -56,20 +56,22 @@ export default function ViewNode({ element }: { element: Partial<Base> }) {
     );
   } else {
     return (
-      <Tag
-        {...element.props}
-        key={element.id}
-        className={element.className}
-        style={element.style}
-      >
-        {element.content
-          ? element.content
-          : Array.isArray(element.children)
-          ? element.children.map((item) => {
-              return <ViewNode key={item.id} element={item} />;
-            })
-          : null}
-      </Tag>
+      <div>
+        <Tag
+          {...element.props}
+          key={element.id}
+          className={element.className}
+          style={element.style}
+        >
+          {element.content
+            ? element.content
+            : Array.isArray(element.children)
+            ? element.children.map((item) => {
+                return <ViewNode key={item.id} element={item} />;
+              })
+            : null}
+        </Tag>
+      </div>
     );
   }
 }

@@ -13,6 +13,8 @@ export interface ElementInit {
 }
 
 export default abstract class Element {
+  type: string | undefined;
+
   id: string;
   parent: Base | undefined;
 
@@ -24,6 +26,8 @@ export default abstract class Element {
   className: string | undefined;
 
   constructor(init?: BaseInit) {
+    this.type = init?.element.type;
+
     this.id = `${init?.element.type}_${uuidv4()}`;
 
     this.content = init?.element.content;

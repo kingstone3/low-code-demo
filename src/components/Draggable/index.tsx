@@ -2,7 +2,10 @@ import { useDraggable } from '@dnd-kit/core';
 
 export default function Draggable(props) {
   const { attributes, listeners, setNodeRef } = useDraggable({
-    id: props.id,
+    id: props.elementType.type,
+    data: {
+      elementType: props.elementType,
+    },
   });
 
   return (

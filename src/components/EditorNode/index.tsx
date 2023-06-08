@@ -31,7 +31,7 @@ export default function EditorNode({
 
   return (
     <Droppable
-      id={element.id}
+      element={element}
       className={classnames(classes.wrapper, {
         [classes.active]: isActive,
       })}

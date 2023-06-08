@@ -4,32 +4,34 @@ import { Form, Input } from 'antd';
 import Base from '../../base';
 import { ElementInit } from '../../base/element';
 
-export default class Text extends Base {
-  isNative = false;
-  componentPath = ['Typography', 'Text'];
+import classes from './index.module.css';
 
-  static previewNode = (<div>Text</div>);
-  static type = 'Text';
+export default class Image extends Base {
+  isNative = false;
+  componentPath = ['Image'];
+
+  static previewNode = (<div>Image</div>);
+  static type = 'Image';
 
   constructor(elementInit?: ElementInit) {
     super({
-      content: '文字示例',
       ...elementInit,
-      type: 'Text',
+      type: 'Image',
+      className: classes.wrapper,
     });
   }
 
   getConfigFields(): Record<string, string | number | undefined> {
     return {
-      content: this.content,
+      src: this.props?.src as unknown as string,
     };
   }
 
   renderConfigItems(): ReactNode {
     return (
       <>
-        <Form.Item label="文字内容" name="content">
-          <Input.TextArea />
+        <Form.Item label="图片地址" name="src">
+          <Input />
         </Form.Item>
       </>
     );
@@ -38,6 +40,9 @@ export default class Text extends Base {
   hanldeConfigFinish(
     values: Record<string, string | number | undefined>,
   ): void {
-    this.content = values.content;
+    this.props = {
+      ...this.props,
+      src: values.src,
+    };
   }
 }

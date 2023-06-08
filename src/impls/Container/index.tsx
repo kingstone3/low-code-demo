@@ -21,26 +21,7 @@ export default class Container extends Base {
       ...elementInit,
       type: 'Container',
       className: classes.wrapper,
-      children: [
-        new Text({
-          content: 123,
-        }),
-
-        new Table({
-          props: {
-            columns: [
-              {
-                title: '事例字段',
-                dataIndex: 'a',
-              },
-              {
-                title: '事例字段2',
-                dataIndex: 'b',
-              },
-            ],
-          },
-        }),
-      ],
+      children: [new Text(), new Table()],
     });
   }
 

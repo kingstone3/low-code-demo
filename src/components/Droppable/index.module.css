@@ -1,0 +1,5 @@
+.wrapper {
+  &.isOver {
+    border-color: red !important;
+  }
+}

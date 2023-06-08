@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Modal } from 'antd';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 
@@ -12,7 +12,7 @@ import { schema } from './impls/Container';
 import type Base from './base';
 
 import classes from './app.module.css';
-import classClasses from './components/Factory/components/Card/index.module.css';
+import cardClasses from './components/Factory/components/Card/index.module.css';
 
 export default function App() {
   const [currentConfigElement, setCurrentConfigElement] = useState<Base>();
@@ -23,7 +23,7 @@ export default function App() {
   const [, _flush] = useState(Symbol('flush'));
 
   const handleView = useCallback(() => {
-    // TODO: 对 schema 实现 toString 方法，并支持解析为 object
+    // TODO: 对 schema 实现 toString 方法，并支持解析为 view object
     setViewSchema(schema);
   }, []);
 
@@ -37,12 +37,23 @@ export default function App() {
     setCurrentConfigElement(undefined);
   }
 
-  function handleDragEnd() {
+  function handleDragEnd(event) {
     setActiveId(null);
+
+    const { active, over } = event;
+
+    if (over && over.data.current.element.type === 'Container') {
+      over.data.current.element.appendChildByIndex(
+        new active.data.current.elementType(),
+      );
+    }
 
     setCurrentConfigElement(undefined);
   }
 
+  // 通过 dnd-kit，可以检测拖拽过程中各种数据，
+  // 再配合 Element 中记录的组件相关配置，可以实现各种元素间操作的规则，
+  // 本例中只展示 column Container 的 appendChild 规则
   return (
     <>
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -66,7 +77,7 @@ export default function App() {
 
         <DragOverlay>
           {activeId ? (
-            <div className={classClasses.wrapper}>{activeId}</div>
+            <div className={cardClasses.wrapper}>{activeId}</div>
           ) : null}
         </DragOverlay>
       </DndContext>

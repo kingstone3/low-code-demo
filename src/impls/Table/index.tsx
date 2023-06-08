@@ -16,6 +16,18 @@ export default class Table extends Base {
 
   constructor(elementInit?: ElementInit) {
     super({
+      props: {
+        columns: [
+          {
+            title: '示例字段',
+            dataIndex: 'a',
+          },
+          {
+            title: '示例字段2',
+            dataIndex: 'b',
+          },
+        ],
+      },
       ...elementInit,
       type: 'Table',
       className: classes.wrapper,
